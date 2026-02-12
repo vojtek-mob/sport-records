@@ -1,0 +1,107 @@
+name: SportTracker
+options:
+  bundleIdPrefix: com.sporttracker
+  deploymentTarget:
+    iOS: "18.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: ""  # TODO: Set your development team ID
+
+packages:
+  Core:
+    path: Packages/Core
+  Data:
+    path: Packages/Data
+  Presentation:
+    path: Packages/Presentation
+  Features:
+    path: Packages/Features
+
+targets:
+  SportTracker:
+    type: application
+    platform: iOS
+    sources:
+      - path: SportTracker
+        excludes:
+          - "**/.DS_Store"
+    dependencies:
+      - package: Features
+        product: SportRecordsFeature
+      - package: Features
+        product: SettingsFeature
+      - package: Presentation
+        product: SharedUI
+      - package: Core
+        product: Domain
+      - package: Data
+        product: DataKit
+    postCompileScripts:
+      - script: |
+          export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"
+          if command -v swiftlint >/dev/null 2>&1; then
+            swiftlint lint --config "${SRCROOT}/.swiftlint.yml" "${SRCROOT}/SportTracker"
+          else
+            echo "warning: SwiftLint not installed. Run 'brew bundle' to install."
+          fi
+        name: "SwiftLint"
+        basedOnDependencyAnalysis: false
+    settings:
+      base:
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: true
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: true
+        INFOPLIST_KEY_UILaunchScreen_Generation: true
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        PRODUCT_BUNDLE_IDENTIFIER: com.sporttracker.app
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: true
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+
+  SportTrackerTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: SportTrackerTests
+        excludes:
+          - "**/.DS_Store"
+    dependencies:
+      - target: SportTracker
+      - package: Features
+        product: SportRecordsFeature
+      - package: Features
+        product: SettingsFeature
+      - package: Presentation
+        product: SharedUI
+      - package: Core
+        product: Domain
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: true
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/SportTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SportTracker"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+
+schemes:
+  SportTracker:
+    build:
+      targets:
+        SportTracker: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      testPlans:
+        - path: SportTracker.xctestplan
+          defaultPlan: true
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

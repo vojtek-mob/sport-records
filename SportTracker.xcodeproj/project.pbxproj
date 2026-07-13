@@ -233,7 +233,6 @@
 				};
 			};
 			buildConfigurationList = 4134ABA81D75AC4513EBA527 /* Build configuration list for PBXProject "SportTracker" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -250,6 +249,7 @@
 				BEC6DEC734954EF142799726 /* XCLocalSwiftPackageReference "Packages/Presentation" */,
 			);
 			preferredProjectObjectVersion = 77;
+			productRefGroup = 318A445D0D669DCB674C2C13 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

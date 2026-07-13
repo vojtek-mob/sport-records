@@ -18,9 +18,8 @@ extension SportRecordsClient: @retroactive DependencyKey {
     // clone the repo and run the PoC without extra build configuration.
     // For a production app, move credentials to a gitignored .xcconfig file.
     private static let supabaseConfig = SupabaseConfig(
-        // swiftlint:disable:next force_unwrapping
-        projectURL: URL(string: "https://xqvxgqildpqizfbrivsc.supabase.co")!,
-        apiKey: "sb_publishable_mqgIrvoMDrvL87RaYQXNZQ_3dutpfmX"
+        projectURL: URL(string: "https://qgjtomwjlexvhayfniry.supabase.co")!,
+        apiKey: "sb_publishable_Mc6JSgmsdnmyQC6dp2vnkw_Oow96cL5"
     )
 
     /// Result of initializing infrastructure dependencies.
